@@ -28,7 +28,7 @@ print(price)
 
 quantity=[]#ввод количества материалов на склад
 for i in range(b):
-    quantity.append(float(input('Кол-во материала на складе')))
+    quantity.append(float(input('Кол-во материала на складе:')))
 print('Кол-во материалов на складе')
 print(quantity)
 
@@ -45,16 +45,20 @@ def function(f):#формируем функцию
     print("+".join(map(str,func)))#ставим между значения знак +
 function(price)
 
-def value(p, d, q):
-    xy=int(input('Решить симплекс-методом (введите 1) или линейного программирования (введите 2)?'))
-    if xy==1:
-        sm=linprog(p, d, q, method = 'simplex')
-        print('Оптимальное значение целевой функции(симплекс):', abs(sm.fun))
-        print('При x:',sm.x)
-    elif xy==2:
-        ov=linprog(p, d, q, method = 'interior-point')
-        print('Оптимальное значение целевой функции(лин.прог.):', abs(ov.fun))
-        print('При x:',ov.x)
-    else:
-        print('Введено неверно')
-value(price, data, quantity)
+def optimal_value(p, d, q):#находим оптимальное значение лин прог
+    ov=linprog(p, d, q, method = 'interior-point')
+    print('Оптимальное значение целевой функции:', abs(ov.fun))
+    print('При x:',ov.x)
+optimal_value(price, data, quantity)
+
+
+def simplex_method(p, d, q):#находим оптимальное значение симплекс методом
+    sm=linprog(p, d, q, method = 'simplex')
+    print('Оптимальное значение целевой функции(симплекс):', abs(sm.fun))
+    print('При x:',sm.x)
+
+xy=int(input('Решить симплекс-методом?(введите 1-если да, введите 2 - если нет)'))#опциональный симплекс-метод
+if xy==1:
+    simplex_method(price, data, quantity)
+elif xy==2:
+    print('Конец')
